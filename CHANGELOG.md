@@ -48,48 +48,69 @@ This project adheres to [Semantic Versioning](http://semver.org/).
   - Improve unit testing coverage of instrument functions and instrument object
   - Updated path to rocsat data
 
-## [2.2.0] - 2020-06-28
-- New Features
-   - Decreased time to load COSMIC GPS data by about 50%
-   - Added DE2 Langmuir Probe, NACS, RPA, and WATS instruments
-   - Updated `test_files.py` to be pytest compatible
-   - Added check to ensure non-pysat keywords supplied at instantiation
-     are supported by underlying data set methods
-   - Updates to instrument testing objects for consistency
-   - Changed madrigal methods to use `madrigalWeb` as a module rather than
-     calling it externally
-   - Added warning when FillValue metadata could lead to unexpected results
-     when writing a netCDF4 file
-   - Use conda to manage Travis CI test environment
-   - Test instruments now part of compiled package for development elsewhere
-   - Added NaN filter for metadata when writing netCDF4 files
-- Deprecation Warning
-  - custom.add will be renamed custom.attach in pysat 3.0.0
-- Documentation
-  - Fixed description of tag and sat_id behaviour in testing instruments
-  - Added discussion of github install, develop branches, and reqs to docs
-- Bug Fix
-  - `_files._attach_files` now checks for an empty file list before appending
-  - Fixed boolean logic when checking for start and stop dates in `_instrument.download`
-  - Fixed loading of COSMIC atmPrf files
-  - Fixed feedback from COSMIC GPS when data not found on remote server
-  - Fixed deprecation warning for pysat.utils.coords.scale_units
-  - Fixed a bug when trying to combine empty f107 lists
-  - Fixed a bug where `remote_file_list` would fail for some instruments.
-  - Made import of methods more robust
-  - Fixed `SettingWithCopyWarning` in `cnofs_ivm` cleaning routine
-  - Fixed cosmic load method definition to include altitude_bin
-  - Fixed pysat_testing method definition to include mangle_file_dates keyword
-  - Added small time offsets (< 1s) to ensure COSMIC files and data have unique times
-  - Updates to Travis CI environment
-  - Removed `inplace` use in xarray `assign` function, which is no longer allowed
-  - Removed old code and incorrect comments from F10.7 support
-  - Updated use of numpy.linspace to be compatible with numpy 1.18.
-  - Fixed output of orbit_info during print(inst)
-  - Fixed a bug when requesting non-existent files from CDAWeb (#426)
-  - Improved compatibility of parse_delimited_filenames (#439)
-  - Fixed bug assigning dates to COSMIC files
+  ## [2.2.1] - 2020-07-29
+  - Documentation
+     - Improved organization of documentation on ReadTheDocs
+  - Bug Fix
+     - Adopted .readthedocs.yml to restore online documentation on ReadTheDocs
+     - Modified MANIFEST.in to include pysat_testing instruments
+     - Rename default branch as `main`
 
+  ## [2.2.0] - 2020-07-24
+  - New Features
+     - Decreased time to load COSMIC GPS data by about 50%
+     - Added DE2 Langmuir Probe, NACS, RPA, and WATS instruments
+     - Updated `test_files.py` to be pytest compatible
+     - Added check to ensure non-pysat keywords supplied at instantiation
+       are supported by underlying data set methods
+     - Updates to instrument testing objects for consistency
+     - Changed madrigal methods to use `madrigalWeb` as a module rather than
+       calling it externally
+     - Added warning when FillValue metadata could lead to unexpected results
+       when writing a netCDF4 file
+     - Use conda to manage Travis CI test environment
+     - Update ICON instrument file structure
+     - Added NaN filter for metadata when writing netCDF4 files
+     - Test instruments now part of compiled package for development elsewhere
+     - Reviewed and improved documentation
+     - Custom instrument keywords and defaults are now always found in inst.kwargs
+     - Added support for ~ and $ variables when setting pysat data dir
+     - Added custom.attach to make transitions to v3.0 easier
+  - Deprecation Warning
+    - custom.add will be renamed custom.attach in pysat 3.0.0
+    - Several functions in coords will be removed in pysat 3.0.0.  These functions will move to pysatMadrigal
+      - geodetic_to_geocentric
+      - geodetic_to_geocentric_horizontal
+      - spherical_to_cartesian
+      - global_to_local_cartesian
+      - local_horizontal_to_global_geo
+    - methods.nasa_cdaweb.list_files will move to methods.general.list_files in pysat 3.0.0.
+  - Documentation
+    - Fixed description of tag and sat_id behaviour in testing instruments
+    - Added discussion of github install, develop branches, and reqs to docs
+  - Bug Fix
+    - `_files._attach_files` now checks for an empty file list before appending
+    - Fixed boolean logic when checking for start and stop dates in `_instrument.download`
+    - Fixed loading of COSMIC atmPrf files
+    - Fixed feedback from COSMIC GPS when data not found on remote server
+    - Fixed deprecation warning for pysat.utils.coords.scale_units
+    - Fixed a bug when trying to combine empty f107 lists
+    - Fixed a bug where `remote_file_list` would fail for some instruments.
+    - Made import of methods more robust
+    - Fixed `SettingWithCopyWarning` in `cnofs_ivm` cleaning routine
+    - Fixed cosmic load method definition to include altitude_bin
+    - Fixed pysat_testing method definition to include mangle_file_dates keyword
+    - Added small time offsets (< 1s) to ensure COSMIC files and data have unique times
+    - Updates to Travis CI environment
+    - Removed `inplace` use in xarray `assign` function, which is no longer allowed
+    - Removed old code and incorrect comments from F10.7 support
+    - Updated use of numpy.linspace to be compatible with numpy 1.18.
+    - Fixed output of orbit_info during print(inst)
+    - Fixed a bug when requesting non-existent files from CDAWeb (#426)
+    - Improved compatibility of parse_delimited_filenames (#439)
+    - Fixed bug assigning dates to COSMIC files
+    - Fixed bug limiting local time orbit breakdowns for instruments much slower
+      than 1 Hz
 
 ## [2.1.0] - 2019-11-18
 - New Features
