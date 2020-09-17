@@ -1,19 +1,23 @@
+os: linux
 language: python
 dist: xenial
-matrix:
+jobs:
   include:
     - name: 'docs'
       python: '3.6'
-      script: 
+      script:
         - sphinx-build -E -b html docs dist/docs
         - sphinx-build -b linkcheck docs dist/docs
-    - name: '3.6 with flake8'
+    - name: '3.6 with NEP 029 numpy'
       python: '3.6'
+      env: NUMPY_VER=1.16
       script: pytest --flake8 --cov=pysat/
     - python: '3.7'
       script: pytest --cov=pysat/
-    - python: '3.8'
-      script: pytest --cov=pysat/
+    - python: '3.8 with flake8'
+      script: pytest --flake8 --cov=pysat/
+  allow_failures:
+    - name: 'docs'
 
 services: xvfb
 cache: pip
@@ -40,6 +44,12 @@ install:
   - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
   - conda activate test-environment
   - while read requirement; do conda install --yes $requirement; done < requirements.txt
+  # check for custom version of numpy
+  - if [ -z ${NUMPY_VER} ]; then
+      echo 'Using latest numpy';
+    else
+      conda install numpy==$NUMPY_VER;
+    fi
   # Get dependencies not provided by conda from pip (testing dependencies)
   - pip install -r test_requirements.txt
   # set up data directory
@@ -49,6 +59,3 @@ install:
 
 after_success:
  - coveralls --rcfile=setup.cfg
-
-allow_failures:
-  - name: 'docs'
