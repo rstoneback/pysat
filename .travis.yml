@@ -39,7 +39,7 @@ install:
 
 # command to run tests
 script:
- - pytest -vs --flake8 --cov=pysat/
+ - pytest --flake8 --cov=pysat/
 
 after_success:
  - coveralls --rcfile=setup.cfg
