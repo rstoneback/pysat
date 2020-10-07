@@ -43,10 +43,6 @@ Author name and institution
 
 """
 
-# python 2/3 comptability
-from __future__ import print_function
-from __future__ import absolute_import
-
 import datetime as dt
 import logging
 
@@ -172,7 +168,8 @@ def download(date_array, tag, inst_id, data_path=None, user=None, password=None,
 def init(self):
     """Initializes the Instrument object with instrument specific values.
 
-    Runs once upon instantiation. Object modified in place. Optional.
+    Runs once upon instantiation. Object modified in place.  Use this to set
+    the acknowledgements and references.
 
     Parameters
     ----------
@@ -184,9 +181,9 @@ def init(self):
     logger.info(" ".join(("Mission acknowledgements and data restrictions will",
                           "be here when available.")))
     # acknowledgements
-    self.meta.acknowledgements = ''
+    self.acknowledgements = ''
     # references
-    self.meta.references = ''
+    self.references = ''
 
     return
 
