@@ -2864,14 +2864,11 @@ def _get_supported_keywords(load_func):
     # modified from code on
     # https://stackoverflow.com/questions/196960/
     # can-you-list-the-keyword-arguments-a-function-receives
-    if sys.version_info.major == 2:
-        args, varargs, varkw, defaults = inspect.getargspec(load_func)
-    else:
-        sig = inspect.getfullargspec(load_func)
-        # args are first
-        args = sig.args
-        # default values
-        defaults = sig.defaults
+    sig = inspect.getfullargspec(load_func)
+    # args are first
+    args = sig.args
+    # default values
+    defaults = sig.defaults
     # deal with special cases for defaults
     # we get defaults=None when the empty pysat.Instrument() is created
     if defaults is None:
