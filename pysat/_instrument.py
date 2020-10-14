@@ -2364,7 +2364,6 @@ class Instrument(object):
         if export_nan is None:
             export_nan = self.meta._export_nan
 
-        file_format = 'NETCDF4'
         # base_instrument used to define the standard attributes attached
         # to the instrument object. Any additional attributes added
         # to the main input Instrument will be written to the netCDF4
@@ -2413,7 +2412,7 @@ class Instrument(object):
         # then if column is a Series of Frames, write as 2D variables
         # metadata must be filtered before writing to netCDF4, string variables
         # can't have a fill value
-        with netCDF4.Dataset(fname, mode='w', format=file_format) as out_data:
+        with netCDF4.Dataset(fname, mode='w') as out_data:
             # number of items, yeah
             num = len(self.index)
             # write out the datetime index
@@ -2708,8 +2707,7 @@ class Instrument(object):
                         # get index information
                         idx = good_data_loc
                         data, coltype, datetime_flag = \
-                            self._get_data_info(self[key].iloc[idx].index,
-                                                file_format)
+                            self._get_data_info(self[key].iloc[idx].index)
                         # create dimension variable for to store index in
                         # netCDF4
                         cdfkey = out_data.createVariable(case_key, coltype,
