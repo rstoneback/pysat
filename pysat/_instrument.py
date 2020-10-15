@@ -2480,13 +2480,10 @@ class Instrument(object):
                 else:
                     # use variable names used by user when working with data
                     case_key = key
-                data, coltype, datetime_flag = self._get_data_info(self[key],
-                                                                   file_format)
+                data, coltype, datetime_flag = self._get_data_info(self[key])
                 # operate on data based upon type
                 if self[key].dtype != np.dtype('O'):
                     # not an object, normal basic 1D data
-                    # print(key, coltype, file_format)
-
                     cdfkey = out_data.createVariable(case_key,
                                                      coltype,
                                                      dimensions=(epoch_name),
@@ -2616,8 +2613,7 @@ class Instrument(object):
                                 # multiple subvariables stored under a single
                                 # main variable heading
                                 idx = self[key].iloc[good_data_loc][col]
-                                data, coltype, _ = \
-                                    self._get_data_info(idx, file_format)
+                                data, coltype, _ = self._get_data_info(idx)
                                 cdfkey = \
                                     out_data.createVariable('_'.join((case_key,
                                                                       col)),
@@ -2664,8 +2660,7 @@ class Instrument(object):
                                 # get information about information within
                                 # series
                                 idx = self[key].iloc[good_data_loc]
-                                data, coltype, _ = \
-                                    self._get_data_info(idx, file_format)
+                                data, coltype, _ = self._get_data_info(idx)
                                 cdfkey = \
                                     out_data.createVariable(case_key + '_data',
                                                             coltype,
